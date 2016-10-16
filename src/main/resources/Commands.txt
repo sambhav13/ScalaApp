@@ -1,0 +1,40 @@
+mvn package -DskipTests
+
+
+#Standalone mode
+spark-submit \
+--class org.apache.spark.examples.SparkPi \
+--deploy-mode client \
+--master spark//$SPARK_MASTER_IP:$SPARK_MASTER_PORT \
+$SPARK_HOME/examples/lib/spark-examples_version.jar 10
+
+
+#Spark Yarn-client mode
+spark-submit  \
+--class org.apache.spark.examples.SparkPi \
+--deploy-mode client \    
+--master yarn \    
+$SPARK_HOME/examples/lib/spark-examples_version.jar 10
+
+
+#Spark  Yarn-cluster mode
+spark-submit  \    
+--class org.apache.spark.examples.SparkPi \    
+--deploy-mode cluster \    
+--master yarn \    
+$SPARK_HOME/examples/lib/spark-examples_version.jar 10
+
+spark-submit \
+--class org.apache.spark.examples.SparkPi --deploy-mode client --master spark//$SPARK_MASTER_IP:$SPARK_MASTER_PORT examples_version.jar 10
+
+spark-submit --class com.scala.app.App --deploy-mode client --master local target\ScalaApp-1.0-jar-with-dependencies
+
+https://github.com/apache/spark/blob/master/docs/streaming-kafka-integration.md
+
+
+if (nchar(Sys.getenv("SPARK_HOME")) < 1) {
+  Sys.setenv(SPARK_HOME = "F:\\software\\spark-2.0.0-bin-hadoop2.7")
+}
+
+library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
+sc <- sparkR.init(master = "local[*]", sparkEnvir = list(spark.driver.memory="2g"))
